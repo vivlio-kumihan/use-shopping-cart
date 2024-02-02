@@ -1,7 +1,7 @@
-//components/SearchComponent.js
+//components/Search.js
 import React from 'react';
  
-function SearchComponent({ searchCourse, courseSearchUserFunction }) {
+function Search({ searchCourse, courseSearchUserFunction }) {
   return (
     <header className="App-header">
       <h1>GeeksforGeeks Shopping Cart</h1>
@@ -17,4 +17,4 @@ function SearchComponent({ searchCourse, courseSearchUserFunction }) {
   );
 }
  
-export default SearchComponent;
+export default Search;

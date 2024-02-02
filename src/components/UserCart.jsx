@@ -1,8 +1,8 @@
-//components/UserCartComponent.js
+//components/UserCart.js
  
 import React from 'react';
  
-function UserCartComponent({
+function UserCart({
   cartCourses,
   deleteCourseFromCartFunction,
   totalAmountCalculationFunction,
@@ -92,4 +92,4 @@ return (
   );
 }
  
-export default UserCartComponent;
+export default UserCart;

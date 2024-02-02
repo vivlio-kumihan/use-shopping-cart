@@ -1,7 +1,7 @@
-//components/ShowCourseComponent.js^$\n
+//components/ShowCourse.js^$\n
 import React from 'react';
  
-function ShowCourseComponent({ courses, 
+function ShowCourse({ courses, 
   filterCourseFunction, 
   addCourseToCartFunction }) {
   return (
@@ -29,4 +29,4 @@ function ShowCourseComponent({ courses,
   );
 }
  
-export default ShowCourseComponent;
+export default ShowCourse;

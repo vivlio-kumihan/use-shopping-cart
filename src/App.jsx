@@ -1,9 +1,9 @@
 //App.js
 import React, { useState } from 'react';
 import './App.sass';
-import SearchComponent from './components/SearchComponent';
-import ShowCourseComponent from './components/ShowCourseComponent';
-import UserCartComponent from './components/UserCartComponent';
+import Search from './components/Search';
+import ShowCourse from './components/ShowCourse';
+import UserCart from './components/UserCart';
 
 function App() {
   const [courses, setCourses] = useState([
@@ -61,16 +61,16 @@ function App() {
  
   return (
     <div className="App">
-      <SearchComponent searchCourse={searchCourse} 
+      <Search searchCourse={searchCourse} 
                 courseSearchUserFunction={courseSearchUserFunction} />
       <main className="App-main">
-        <ShowCourseComponent
+        <ShowCourse
           courses={courses}
           filterCourseFunction={filterCourseFunction}
           addCourseToCartFunction={addCourseToCartFunction}
         />
  
-        <UserCartComponent
+        <UserCart
           cartCourses={cartCourses}
           deleteCourseFromCartFunction={deleteCourseFromCartFunction}
           totalAmountCalculationFunction={totalAmountCalculationFunction}
