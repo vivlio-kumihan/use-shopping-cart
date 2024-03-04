@@ -5,7 +5,7 @@ import Search from './components/Search';
 import ShowCourse from './components/ShowCourse';
 import UserCart from './components/UserCart';
 
-function App() {
+const App = () => {
   const [courses, setCourses] = useState([
     { id: 1, 
       name: 'GFG T-shirt', 
@@ -40,36 +40,37 @@ function App() {
       setCartCourses([...cartCourses, {product: GFGcourse, quantity: 1}]);
     }
   };
- 
+
   const deleteCourseFromCartFunction = (GFGCourse) => {
     const updatedCart = cartCourses.filter(item => item.product.id !== GFGCourse.id);
     setCartCourses(updatedCart);
   };
- 
+
   const totalAmountCalculationFunction = () => {
     return cartCourses.reduce((total, item) => 
                total + item.product.price * item.quantity, 0);
   };
- 
+
   const courseSearchUserFunction = (event) => {
     setSearchCourse(event.target.value);
   };
- 
+
   const filterCourseFunction = courses.filter((course) =>
     course.name.toLowerCase().includes(searchCourse.toLowerCase())
   );
- 
+
   return (
     <div className="App">
-      <Search searchCourse={searchCourse} 
-                courseSearchUserFunction={courseSearchUserFunction} />
+      <Search 
+        searchCourse={searchCourse} 
+        courseSearchUserFunction={courseSearchUserFunction} />
       <main className="App-main">
         <ShowCourse
           courses={courses}
           filterCourseFunction={filterCourseFunction}
           addCourseToCartFunction={addCourseToCartFunction}
         />
- 
+  
         <UserCart
           cartCourses={cartCourses}
           deleteCourseFromCartFunction={deleteCourseFromCartFunction}
@@ -79,6 +80,6 @@ function App() {
       </main>
     </div>
   );
-}
- 
+};
+
 export default App;

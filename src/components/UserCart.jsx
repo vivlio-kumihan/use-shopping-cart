@@ -1,28 +1,30 @@
 //components/UserCart.js
- 
+
 import React from 'react';
- 
-function UserCart({
+
+const UserCart = ({
   cartCourses,
   deleteCourseFromCartFunction,
   totalAmountCalculationFunction,
   setCartCourses,
-}) {
-return (
-<div className={`cart ${cartCourses.length > 0 ? 'active' : ''}`}>
+}) => {
+  return (
+  <div className={`cart ${cartCourses.length > 0 ? 'active' : ''}`}>
   <h2>My Cart</h2>
-  {cartCourses.length === 0 ? (
+  {cartCourses.length === 0 
+    ? (
   <p className="empty-cart">Geek, your cart is empty.</p>
-  ) : (
-<div>
+    )
+    : (
+  <div>
   <ul>
     {cartCourses.map((item) => (
       <li key={item.product.id} className="cart-item">
         <div>
           <div className="item-info">
             <div className="item-image">
-              <img src={item.product.image} 
-                 alt={item.product.name} />
+              <img  src={item.product.image} 
+                    alt={item.product.name} />
             </div>
             <div className="item-details">
               <h3>{item.product.name}</h3>
@@ -33,8 +35,8 @@ return (
             <div className="item-actions">
               <button
                 className="remove-button"
-                onClick={() => 
-                deleteCourseFromCartFunction(item.product)}>
+                onClick={() => deleteCourseFromCartFunction(item.product)}
+              >
                 Remove Product
               </button>
               <div className="quantity">
@@ -44,8 +46,7 @@ return (
                     const updatedCart = prevCartCourses.map(
                     (prevItem) =>
                       prevItem.product.id === item.product.id
-                        ? { ...prevItem, quantity: 
-                        item.quantity + 1 }
+                        ? { ...prevItem, quantity: item.quantity + 1 }
                         : prevItem
                     );
                     return updatedCart;
@@ -58,8 +59,7 @@ return (
                     const updatedCart = prevCartCourses.map(
                     (prevItem) =>
                     prevItem.product.id === item.product.id
-                        ? { ...prevItem, quantity:
-                        Math.max(item.quantity - 1, 0) }
+                        ? { ...prevItem, quantity: Math.max(item.quantity - 1, 0) }
                         : prevItem
                     );
                     return updatedCart;
@@ -86,10 +86,10 @@ return (
       Proceed to Payment
     </button>
   </div>
-</div>
+  </div>
       )}
-</div>
+  </div>
   );
-}
- 
+};
+
 export default UserCart;
