@@ -1,15 +1,15 @@
 //components/Search.js
 import React from 'react';
 
-const Search = ({ searchCourse, courseSearchUserFn }) => {
+const Header = ({ searchCourse, courseSearchUserFn }) => {
   return (
     <header className="App-header">
-      <h1>GeeksforGeeks Shopping Cart</h1>
+      <h1>授与品のご紹介</h1>
       <div className="search-bar">
         {/* 課題　インプットに入力しても文字が表示されない問題。 */}
         <input
           type="text"
-          placeholder="Search for GFG Products..."
+          placeholder="授与品の検索"
           value={searchCourse}
           onChange={courseSearchUserFn}
         />
@@ -18,4 +18,4 @@ const Search = ({ searchCourse, courseSearchUserFn }) => {
   );
 };
 
-export default Search;
+export default Header;

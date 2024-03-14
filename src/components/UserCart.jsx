@@ -11,7 +11,7 @@ const UserCart = ({
 
   return (
   <div className={`cart ${cartCourses.length > 0 ? 'active' : ''}`}>
-    <h2>My Cart</h2>
+    <h2>授与品リスト</h2>
     {cartCourses.length === 0 
       ? (
     <p className="empty-cart">Geek, your cart is empty.</p>
@@ -29,7 +29,7 @@ const UserCart = ({
               </div>
               <div className="item-details">
                 <h3>{item.product.name}</h3>
-                <p>Price: ₹{item.product.price}</p>
+                <p>Price: ￥{item.product.price}</p>
               </div>
             </div>
             <div>

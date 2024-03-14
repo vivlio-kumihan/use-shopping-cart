@@ -1,9 +1,9 @@
 //App.js
 import React, { useState } from 'react';
 import './App.sass';
+import Header from './components/Header';
 import ShowCourse from './components/ShowCourse';
 import UserCart from './components/UserCart';
-import Search from './components/Search';
 
 const App = () => {
   // 商品のDB部分
@@ -97,7 +97,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <Search 
+      <Header 
         searchCourse={searchCourse} 
         courseSearchUserFn={courseSearchUserFn} />
       <main className="App-main">

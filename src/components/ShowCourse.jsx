@@ -13,7 +13,7 @@ const ShowCourse = ({
       {filterCourseFn.length === 0 
         ? (
       <p className="no-results">
-        Sorry Geek, No matching Product found.
+        検索に合致する商品はございません。
       </p>
         ) 
         : (
@@ -21,12 +21,12 @@ const ShowCourse = ({
       <div className="product" key={product.id}>
         <img src={product.image} alt={product.name} />
         <h2>{product.name}</h2>
-        <p>Price: ₹{product.price}</p>
+        <p>￥{product.price}</p>
         <button
           className="add-to-cart-button"
           onClick={() => addCourseToCartFn(product)}
         >
-          Add to Shopping Cart
+          授与品のリストへ登録
         </button>
       </div>))
         )
