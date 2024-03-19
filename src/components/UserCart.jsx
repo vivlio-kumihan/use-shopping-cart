@@ -1,4 +1,4 @@
-//components/UserCart.js
+import "../sass/UserCart.sass";
 
 import React from 'react';
 
@@ -29,8 +29,45 @@ const UserCart = ({
               </div>
               <div className="item-details">
                 <h3>{item.product.name}</h3>
-                <p>Price: ￥{item.product.price}</p>
+                <p>￥{item.product.price}</p>
               </div>
+            </div>
+            <div className="colors">
+              <ul>
+                {
+                  item.product.color.map(col => (
+                <li key={col}>
+                  {col}
+                  <div className="count-color">
+                  <button
+                    onClick={() => {
+                    setCartCourses((prevCartCourses) => {
+                      const updatedCart = prevCartCourses.map((prevItem) =>
+                        prevItem.product.id === item.product.id
+                          ? { ...prevItem, quantity: item.quantity + 1 }
+                          : prevItem
+                      );
+                      return updatedCart;
+                    })
+                  }}>+</button>
+                  <p className='quant'>{item.quantity}</p>
+                  <button 
+                    onClick={(e) => {
+                    setCartCourses((prevCartCourses) => {
+                      const updatedCart = prevCartCourses.map(
+                      (prevItem) =>
+                      prevItem.product.id === item.product.id
+                          ? { ...prevItem, quantity: Math.max(item.quantity - 1, 0) }
+                          : prevItem
+                      );
+                      return updatedCart;
+                    })
+                  }}>-</button>
+                </div>
+                </li>
+                  ))
+                }
+              </ul>
             </div>
             <div>
               <div className="item-actions">
@@ -40,11 +77,14 @@ const UserCart = ({
                   // 無名関数を使う。
                   onClick={() => deleteCourseFromCartFn(item.product)}
                 >
-                  Remove Product
+                  授与品リストから削除する
                 </button>
                 <div className="quantity">
                   <button style={{ margin: "1%" }} 
                     onClick={() => {
+                    // prevでもなんでもいい。
+                    // setCartCoursesの状態を変更する際に用いることができる仮引数。
+                    // 変更前の状態をもつ仮引数だと思っておけばいいみたい。
                     setCartCourses((prevCartCourses) => {
                       const updatedCart = prevCartCourses.map(
                       (prevItem) =>
@@ -96,15 +136,3 @@ const UserCart = ({
 };
 
 export default UserCart;
-
-{/* <ul>
-  {product.color.map(c => (
-    <li>
-      <label htmlFor="type_name">{c}</label>
-      <input id="type_name" type="number" 
-        onChange={(e) => {
-        }}
-      />
-    </li>
-  ))}
-</ul> */}
