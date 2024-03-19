@@ -13,19 +13,31 @@ const App = () => {
   const [courses, setCourses] = useState([
     { id: 1, 
       name: 'GFG T-shirt', 
-      color: ["white", "red", "black"],
+      color: [
+        { name: 'white', quantity: 0 },
+        { name: 'red', quantity: 0 },
+        { name: 'black', quantity: 0 }      
+      ],
       price: 499, 
       image: 'https://media.geeksforgeeks.org/wp-content/uploads/20230823165506/gfg1.png'
     },
     { id: 2, 
       name: 'GFG Bag', 
-      color: ["white", "red", "black"],
+      color: [
+        { name: 'orange', quantity: 0 },
+        { name: 'gray', quantity: 0 },
+        { name: 'amber', quantity: 0 }      
+      ],      
       price: 699, 
       image: 'https://media.geeksforgeeks.org/wp-content/uploads/20230823165553/gfg2.jpg'
     },
     { id: 3, 
       name: 'GFG Hoodie', 
-      color: ["white", "red", "black"],
+      color: [
+        { name: 'gold', quantity: 0 },
+        { name: 'puple', quantity: 0 },
+        { name: 'pink', quantity: 0 }      
+      ],       
       price: 799, 
       image: 'https://media.geeksforgeeks.org/wp-content/uploads/20230823165623/gfg3.jpg'
     }
@@ -48,16 +60,58 @@ const App = () => {
     course.name.toLowerCase().includes(searchCourse.toLowerCase())
   );
 
-
   // fix
   const addCourseToCartFn = (chiceCourse) => {
-    // const alreadyCourse = cartCourses.find(item => item.product.id === chiceCourse.id);
     cartCourses.find(item => item.product.id === chiceCourse.id)
       ? setCartCourses(cartCourses)
-      : setCartCourses([...cartCourses, {product: chiceCourse, quantity: 0}])
+      : setCartCourses([...cartCourses, { product: chiceCourse }])
   };
 
-  // // org
+  // カートから商品を削除する関数
+  // カート内にある商品へfilterメソッドを使い
+  // 削除ボタンを押した商品『以外』のものを
+  // 『収集して』状態を上書きする。発想の逆転。
+  const deleteCourseFromCartFn = (itemProductInCartCourse) => {
+    const updatedCart = cartCourses.filter(item => (
+      item.product.id !== itemProductInCartCourse.id
+      ));
+    setCartCourses(updatedCart);
+  };
+
+  // カートの合計の出し方。
+  // カートの商品を一つひとつにあたって合計していく。
+  const totalAmountCalculationFn = () => {
+    return cartCourses.reduce((total, item) => 
+               total + item.product.price * item.quantity, 0);
+  };
+
+  return (
+    <div className="App">
+      <Header 
+        searchCourse={searchCourse} 
+        courseSearchUserFn={courseSearchUserFn} />
+      <main className="App-main">
+        <ShowCourse
+          courses={courses}
+          filterCourseFn={filterCourseFn}
+          addCourseToCartFn={addCourseToCartFn}
+        />
+        <UserCart
+          cartCourses={cartCourses}
+          deleteCourseFromCartFn={deleteCourseFromCartFn}
+          totalAmountCalculationFn={totalAmountCalculationFn}
+          setCartCourses={setCartCourses}
+        />
+      </main>
+    </div>
+  );
+};
+
+export default App;
+
+
+
+// // org
   // // Showで選択した商品がCartに入れて商品の状態を管理する関数。
   // // Cartへ送った商品へ、数量の属性を追加しカウントを1とする。
   // const addCourseToCartFn = (chiceCourse) => {
@@ -86,47 +140,3 @@ const App = () => {
   //     setCartCourses([...cartCourses, {product: chiceCourse, quantity: 1}]);
   //   }
   // };
-
-  // カートから商品を削除する関数
-  // カート内にある商品へfilterメソッドを使い
-  // 削除ボタンを押した商品『以外』のものを
-  // 『収集して』状態を上書きする。発想の逆転。
-
-  const deleteCourseFromCartFn = (itemProductInCartCourse) => {
-    const updatedCart = cartCourses.filter(item => (
-      item.product.id !== itemProductInCartCourse.id
-      ));
-    setCartCourses(updatedCart);
-  };
-
-  // カートの合計の出し方。
-  // カートの商品を一つひとつにあたって合計していく。
-  const totalAmountCalculationFn = () => {
-    return cartCourses.reduce((total, item) => 
-               total + item.product.price * item.quantity, 0);
-  };
-
-  return (
-    <div className="App">
-      <Header 
-        searchCourse={searchCourse} 
-        courseSearchUserFn={courseSearchUserFn} />
-      <main className="App-main">
-        <ShowCourse
-          courses={courses}
-          filterCourseFn={filterCourseFn}
-          addCourseToCartFn={addCourseToCartFn}
-        />
-  
-        <UserCart
-          cartCourses={cartCourses}
-          deleteCourseFromCartFn={deleteCourseFromCartFn}
-          totalAmountCalculationFn={totalAmountCalculationFn}
-          setCartCourses={setCartCourses}
-        />
-      </main>
-    </div>
-  );
-};
-
-export default App;

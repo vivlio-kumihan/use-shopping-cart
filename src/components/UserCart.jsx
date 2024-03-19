@@ -9,6 +9,30 @@ const UserCart = ({
   totalAmountCalculationFn,
   }) => {
 
+  const handleIncreaseQuantity = (color) => {
+    const updatedCourses = cartCourses.map(item => {
+      const updatedColors = item.product.color.map(c => {
+        return c.name === color.name 
+          ? { ...c, quantity: c.quantity + 1 } : c;
+      });
+      const totalQuantity = updatedColors.reduce((total, c) => total + c.quantity, 0);
+      return { ...item, product: { ...item.product, color: updatedColors, quantity: totalQuantity }};
+    });
+    setCartCourses(updatedCourses);
+    console.log(updatedCourses);
+  };
+
+  const handleDecreaseQuantity = (color) => {
+    const updatedCourses = cartCourses.map(item => {
+      const updatedColors = item.product.color.map(c => {
+      return c.name === color.name 
+        ? { ...c, quantity: Math.max(c.quantity - 1, 0) } : c;
+      });
+      return { ...item, product: { ...item.product, color: updatedColors }};
+    });
+    setCartCourses(updatedCourses);
+  };  
+
   return (
   <div className={`cart ${cartCourses.length > 0 ? 'active' : ''}`}>
     <h2>授与品リスト</h2>
@@ -34,41 +58,16 @@ const UserCart = ({
             </div>
             <div className="colors">
               <ul>
-                {
-                  item.product.color.map(col => (
-                <li key={col}>
-                  {col}
-                  <div className="count-color">
-                  <button
-                    onClick={() => {
-                    setCartCourses((prevCartCourses) => {
-                      const updatedCart = prevCartCourses.map((prevItem) =>
-                        prevItem.product.id === item.product.id
-                          ? { ...prevItem, quantity: item.quantity + 1 }
-                          : prevItem
-                      );
-                      return updatedCart;
-                    })
-                  }}>+</button>
-                  <p className='quant'>{item.quantity}</p>
-                  <button 
-                    onClick={(e) => {
-                    setCartCourses((prevCartCourses) => {
-                      const updatedCart = prevCartCourses.map(
-                      (prevItem) =>
-                      prevItem.product.id === item.product.id
-                          ? { ...prevItem, quantity: Math.max(item.quantity - 1, 0) }
-                          : prevItem
-                      );
-                      return updatedCart;
-                    })
-                  }}>-</button>
-                </div>
-                </li>
-                  ))
-                }
+                {item.product.color.map(color => (
+                  <li key={color.name}>
+                    <span>{color.name}</span>
+                    <button onClick={() => handleIncreaseQuantity(color)}>+</button>
+                    <span>{color.quantity}</span>
+                    <button onClick={() => handleDecreaseQuantity(color)}>-</button>
+                  </li>
+                ))}
               </ul>
-            </div>
+            </div>           
             <div>
               <div className="item-actions">
                 <button
@@ -79,36 +78,6 @@ const UserCart = ({
                 >
                   授与品リストから削除する
                 </button>
-                <div className="quantity">
-                  <button style={{ margin: "1%" }} 
-                    onClick={() => {
-                    // prevでもなんでもいい。
-                    // setCartCoursesの状態を変更する際に用いることができる仮引数。
-                    // 変更前の状態をもつ仮引数だと思っておけばいいみたい。
-                    setCartCourses((prevCartCourses) => {
-                      const updatedCart = prevCartCourses.map(
-                      (prevItem) =>
-                        prevItem.product.id === item.product.id
-                          ? { ...prevItem, quantity: item.quantity + 1 }
-                          : prevItem
-                      );
-                      return updatedCart;
-                    })
-                  }}>+</button>
-                  <p className='quant'>{item.quantity}</p>
-                  <button 
-                    onClick={(e) => {
-                    setCartCourses((prevCartCourses) => {
-                      const updatedCart = prevCartCourses.map(
-                      (prevItem) =>
-                      prevItem.product.id === item.product.id
-                          ? { ...prevItem, quantity: Math.max(item.quantity - 1, 0) }
-                          : prevItem
-                      );
-                      return updatedCart;
-                    })
-                  }}>-</button>
-                </div>
               </div>
             </div>
           </div>
@@ -136,3 +105,41 @@ const UserCart = ({
 };
 
 export default UserCart;
+
+
+
+
+              // <ul>
+              //   {
+              //     item.product.color.map(col => (
+              //   <li key={col}>
+              //     {col}
+              //     <div className="count-color">
+              //     <button
+              //       onClick={() => {
+              //       setCartCourses((prevCartCourses) => {
+              //         const updatedCart = prevCartCourses.map((prevItem) =>
+              //           prevItem.product.id === item.product.id
+              //             ? { ...prevItem, quantity: item.quantity + 1 }
+              //             : prevItem
+              //         );
+              //         return updatedCart;
+              //       })
+              //     }}>+</button>
+              //     <p className='quant'>{item.quantity}</p>
+              //     <button 
+              //       onClick={(e) => {
+              //       setCartCourses((prevCartCourses) => {
+              //         const updatedCart = prevCartCourses.map((prevItem) =>
+              //           prevItem.product.id === item.product.id
+              //             ? { ...prevItem, quantity: Math.max(item.quantity - 1, 0) }
+              //             : prevItem
+              //         );
+              //         return updatedCart;
+              //       })
+              //     }}>-</button>
+              //   </div>
+              //   </li>
+              //     ))
+              //   }
+              // </ul>
